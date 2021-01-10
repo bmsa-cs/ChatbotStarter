@@ -1,6 +1,7 @@
 import main as Chatbot
 
 import random
+import re
 import string
 
 outputs = []
@@ -28,18 +29,10 @@ def mock_same_input(*args, **kwargs):
 
 def check_ifs():
   """Counts all if/elif/else statements and returns whether or not there are at least two of each."""
-  if_count = 0
-  elif_count = 0
-  else_count = 0
-  with open('main.py', 'r') as source:  #open the main.py file
-    for l in source:
-      l = l.replace('\t', '').replace('  ', '')  # remove tabs and double spaces
-      if l.startswith('if'):
-        if_count += 1
-      elif l.startswith('elif'):
-        elif_count += 1
-      elif l.startswith('else'):
-        else_count += 1
+  if_count = sum(x == ['if'] for x in [re.findall(r'^\s*[#]{0}(\bif\b)',line) for line in open('main.py')])
+  elif_count = sum(x == ['elif'] for x in [re.findall(r'^\s*[#]{0}(\belif\b)',line) for line in open('main.py')])
+  else_count = sum(x == ['else'] for x in [re.findall(r'^\s*[#]{0}(\belse\b)', line) for line in open('main.py')])
+
   return if_count >= 2 and elif_count >= 2 and else_count >= 2
 
 
