@@ -18,7 +18,7 @@ def run_tests():
   if importlib.util.find_spec('pytest') is None: # Check if pytest is installed
     os.system('python3 -m pip install -q pytest')
 
-  command = "python3 -m pytest --tb=line -v tests.py"
+  command = "python3 -m pytest --tb=line -v -s tests.py"
   print(command)
   os.system(command)
 
